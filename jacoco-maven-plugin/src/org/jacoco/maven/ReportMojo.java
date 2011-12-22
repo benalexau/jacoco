@@ -11,10 +11,20 @@
  *******************************************************************************/
 package org.jacoco.maven;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import org.apache.maven.doxia.siterenderer.Renderer;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.reporting.AbstractMavenReport;
+import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
 import org.jacoco.core.analysis.Analyzer;
@@ -24,7 +34,11 @@ import org.jacoco.core.analysis.ICoverageNode;
 import org.jacoco.core.data.ExecutionDataReader;
 import org.jacoco.core.data.ExecutionDataStore;
 import org.jacoco.core.data.SessionInfoStore;
-import org.jacoco.report.*;
+import org.jacoco.report.FileMultiReportOutput;
+import org.jacoco.report.IReportGroupVisitor;
+import org.jacoco.report.IReportVisitor;
+import org.jacoco.report.ISourceFileLocator;
+import org.jacoco.report.MultiReportVisitor;
 import org.jacoco.report.csv.CSVFormatter;
 import org.jacoco.report.html.HTMLFormatter;
 import org.jacoco.report.xml.XMLFormatter;
@@ -36,7 +50,85 @@ import org.jacoco.report.xml.XMLFormatter;
  * @goal report
  * @requiresProject true
  */
-public class ReportMojo extends AbstractJacocoMojo {
+public class ReportMojo extends AbstractMavenReport {
+
+	/**
+	 * Maven project.
+	 * 
+	 * @parameter expression="${project}"
+	 * @readonly
+	 */
+	private MavenProject project;
+
+	/**
+	 * A list of class files to include in instrumentation/analysis/reports. May
+	 * use wildcard characters (* and ?). When not specified - everything will
+	 * be included.
+	 * 
+	 * @parameter expression="${jacoco.includes}"
+	 */
+	private List<String> includes;
+
+	/**
+	 * A list of class files to exclude from instrumentation/analysis/reports.
+	 * May use wildcard characters (* and ?).
+	 * 
+	 * @parameter expression="${jacoco.excludes}"
+	 */
+	private List<String> excludes;
+
+	/**
+	 * Flag used to suppress execution.
+	 * 
+	 * @parameter expression="${jacoco.skip}" default-value="false"
+	 */
+	private boolean skip;
+
+    /**
+     * <i>Maven Internal</i>: The Doxia Site Renderer.
+     * 
+     * @component
+     */
+    private Renderer siteRenderer;
+    
+    /**
+     * @see org.apache.maven.reporting.AbstractMavenReport#canGenerateReport()
+     */
+    public boolean canGenerateReport() {
+		if ("pom".equals(project.getPackaging())) {
+			getLog().info(
+					"Skipping JaCoCo for project with packaging type 'pom'");
+			return false;
+		}
+		if (skip) {
+			getLog().info("Skipping JaCoCo execution");
+			return false;
+		}
+		return true;
+	}
+
+    /**
+     * @see org.apache.maven.reporting.AbstractMavenReport#isExternalReport()
+     */
+    public boolean isExternalReport()
+    {
+        return true;
+    }
+    
+	/**
+	 * @return Maven project
+	 */
+	protected final MavenProject getProject() {
+		return project;
+	}
+
+	protected List<String> getIncludes() {
+		return includes;
+	}
+
+	protected List<String> getExcludes() {
+		return excludes;
+	}
 
 	/**
 	 * Output directory for the reports.
@@ -72,8 +164,7 @@ public class ReportMojo extends AbstractJacocoMojo {
 
 	private ExecutionDataStore executionDataStore;
 
-	@Override
-	protected void executeMojo() {
+	protected void executeReport(Locale locale) throws MavenReportException {
 		try {
 			loadExecutionData();
 		} catch (final IOException e) {
@@ -91,6 +182,31 @@ public class ReportMojo extends AbstractJacocoMojo {
 		} catch (final Exception e) {
 			getLog().error("Error while creating report: " + e.getMessage(), e);
 		}
+	}
+
+	@Override
+	public String getOutputName() {
+		return "jacoco/index";
+	}
+
+	@Override
+	public String getName(Locale locale) {
+		return "JaCoCo";
+	}
+
+	@Override
+	public String getDescription(Locale locale) {
+		return "JaCoCo Test Coverage Report.";
+	}
+
+	@Override
+	protected Renderer getSiteRenderer() {
+		return siteRenderer;
+	}
+
+	@Override
+	protected String getOutputDirectory() {
+		return outputDirectory.getAbsolutePath();
 	}
 
 	private void loadExecutionData() throws IOException {
@@ -144,25 +260,31 @@ public class ReportMojo extends AbstractJacocoMojo {
 
 	private IReportVisitor createVisitor() throws IOException {
 		final List<IReportVisitor> visitors = new ArrayList<IReportVisitor>();
-
-		outputDirectory.mkdirs();
+		
+		File effectiveOutputDirectory = getReportOutputDirectory();
+		if (!effectiveOutputDirectory.getName().equals("jacoco")) {
+			effectiveOutputDirectory = new File(effectiveOutputDirectory, "jacoco");
+		}
+		
+		getLog().debug("Effective output directory: " + effectiveOutputDirectory.getCanonicalPath());
+		effectiveOutputDirectory.mkdirs();
 
 		final XMLFormatter xmlFormatter = new XMLFormatter();
 		xmlFormatter.setOutputEncoding(outputEncoding);
 		visitors.add(xmlFormatter.createVisitor(new FileOutputStream(new File(
-				outputDirectory, "jacoco.xml"))));
+				effectiveOutputDirectory, "jacoco.xml"))));
 
 		final CSVFormatter formatter = new CSVFormatter();
 		formatter.setOutputEncoding(outputEncoding);
 		visitors.add(formatter.createVisitor(new FileOutputStream(new File(
-				outputDirectory, "jacoco.csv"))));
+				effectiveOutputDirectory, "jacoco.csv"))));
 
 		final HTMLFormatter htmlFormatter = new HTMLFormatter();
 		// formatter.setFooterText(footer);
 		htmlFormatter.setOutputEncoding(outputEncoding);
 		// formatter.setLocale(locale);
 		visitors.add(htmlFormatter.createVisitor(new FileMultiReportOutput(
-				outputDirectory)));
+				effectiveOutputDirectory)));
 
 		return new MultiReportVisitor(visitors);
 	}
@@ -217,6 +339,7 @@ public class ReportMojo extends AbstractJacocoMojo {
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected List<File> getFilesToAnalyze(File rootDir) throws IOException {
 		final String includes;
 		if (getIncludes() != null && !getIncludes().isEmpty()) {
