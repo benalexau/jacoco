@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='2'>
+  <unit id='org.jacoco.report' version='0.5.6.20111223072633' singleton='false'>
+    <update id='org.jacoco.report' range='[0.0.0,0.5.6.20111223072633)' severity='0'/>
+    <properties size='5'>
+      <property name='org.eclipse.equinox.p2.name' value='JaCoCo Report'/>
+      <property name='org.eclipse.equinox.p2.provider' value='Mountainminds GmbH &amp; Co. KG'/>
+      <property name='maven-groupId' value='org.jacoco'/>
+      <property name='maven-artifactId' value='org.jacoco.report'/>
+      <property name='maven-version' value='0.5.6.20111223072633'/>
+    </properties>
+    <provides size='7'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.jacoco.report' version='0.5.6.20111223072633'/>
+      <provided namespace='osgi.bundle' name='org.jacoco.report' version='0.5.6.20111223072633'/>
+      <provided namespace='java.package' name='org.jacoco.report' version='0.0.0'/>
+      <provided namespace='java.package' name='org.jacoco.report.csv' version='0.0.0'/>
+      <provided namespace='java.package' name='org.jacoco.report.html' version='0.0.0'/>
+      <provided namespace='java.package' name='org.jacoco.report.xml' version='0.0.0'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+    </provides>
+    <requires size='2'>
+      <required namespace='osgi.bundle' name='org.jacoco.core' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.objectweb.asm' range='[3.2.0,4.0.0)'/>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.jacoco.report' version='0.5.6.20111223072633'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: org.jacoco.report&#xA;Bundle-Version: 0.5.6.20111223072633&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='org.jacoco.report.source' version='0.5.6.20111223072633' singleton='false'>
+    <update id='org.jacoco.report.source' range='[0.0.0,0.5.6.20111223072633)' severity='0'/>
+    <properties size='4'>
+      <property name='maven-groupId' value='org.jacoco'/>
+      <property name='maven-artifactId' value='org.jacoco.report'/>
+      <property name='maven-version' value='0.5.6.20111223072633'/>
+      <property name='maven-classifier' value='sources'/>
+    </properties>
+    <provides size='3'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.jacoco.report.source' version='0.5.6.20111223072633'/>
+      <provided namespace='osgi.bundle' name='org.jacoco.report.source' version='0.5.6.20111223072633'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='source' version='1.0.0'/>
+    </provides>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.jacoco.report.source' version='0.5.6.20111223072633'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: org.jacoco.report.source&#xA;Bundle-Version: 0.5.6.20111223072633&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>

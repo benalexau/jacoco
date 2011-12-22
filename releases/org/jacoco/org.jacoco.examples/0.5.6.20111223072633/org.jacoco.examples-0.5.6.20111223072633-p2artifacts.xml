@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<artifacts size='2'>
+  <artifact classifier='osgi.bundle' id='org.jacoco.examples' version='0.5.6.20111223072633'>
+    <properties size='6'>
+      <property name='artifact.size' value='18456'/>
+      <property name='download.size' value='18456'/>
+      <property name='download.md5' value='11f43d0ffb941e2fece37c74a244e3c7'/>
+      <property name='maven-groupId' value='org.jacoco'/>
+      <property name='maven-artifactId' value='org.jacoco.examples'/>
+      <property name='maven-version' value='0.5.6.20111223072633'/>
+    </properties>
+  </artifact>
+  <artifact classifier='osgi.bundle' id='org.jacoco.examples.source' version='0.5.6.20111223072633'>
+    <properties size='7'>
+      <property name='artifact.size' value='10540'/>
+      <property name='download.size' value='10540'/>
+      <property name='download.md5' value='0949e18909a310a1c69e128f856cf0b1'/>
+      <property name='maven-groupId' value='org.jacoco'/>
+      <property name='maven-artifactId' value='org.jacoco.examples'/>
+      <property name='maven-version' value='0.5.6.20111223072633'/>
+      <property name='maven-classifier' value='sources'/>
+    </properties>
+  </artifact>
+</artifacts>

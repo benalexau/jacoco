@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='2'>
+  <unit id='org.jacoco.core.test' version='0.5.6.20111223072633' singleton='false'>
+    <update id='org.jacoco.core.test' range='[0.0.0,0.5.6.20111223072633)' severity='0'/>
+    <properties size='5'>
+      <property name='org.eclipse.equinox.p2.name' value='JaCoCo Core Tests'/>
+      <property name='org.eclipse.equinox.p2.provider' value='Mountainminds GmbH &amp; Co. KG'/>
+      <property name='maven-groupId' value='org.jacoco'/>
+      <property name='maven-artifactId' value='org.jacoco.core.test'/>
+      <property name='maven-version' value='0.5.6.20111223072633'/>
+    </properties>
+    <provides size='4'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.jacoco.core.test' version='0.5.6.20111223072633'/>
+      <provided namespace='osgi.bundle' name='org.jacoco.core.test' version='0.5.6.20111223072633'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      <provided namespace='osgi.fragment' name='org.jacoco.core' version='0.5.6.20111223072633'/>
+    </provides>
+    <requires size='3'>
+      <required namespace='osgi.bundle' name='org.jacoco.core' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.junit4' range='[4.0.0,5.0.0)'/>
+      <required namespace='osgi.bundle' name='org.objectweb.asm' range='[3.2.0,4.0.0)'/>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.jacoco.core.test' version='0.5.6.20111223072633'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: org.jacoco.core.test&#xA;Bundle-Version: 0.5.6.20111223072633&#xA;Fragment-Host: org.jacoco.core&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='org.jacoco.core.test.source' version='0.5.6.20111223072633' singleton='false'>
+    <update id='org.jacoco.core.test.source' range='[0.0.0,0.5.6.20111223072633)' severity='0'/>
+    <properties size='4'>
+      <property name='maven-groupId' value='org.jacoco'/>
+      <property name='maven-artifactId' value='org.jacoco.core.test'/>
+      <property name='maven-version' value='0.5.6.20111223072633'/>
+      <property name='maven-classifier' value='sources'/>
+    </properties>
+    <provides size='3'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.jacoco.core.test.source' version='0.5.6.20111223072633'/>
+      <provided namespace='osgi.bundle' name='org.jacoco.core.test.source' version='0.5.6.20111223072633'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='source' version='1.0.0'/>
+    </provides>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.jacoco.core.test.source' version='0.5.6.20111223072633'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: org.jacoco.core.test.source&#xA;Bundle-Version: 0.5.6.20111223072633&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>
