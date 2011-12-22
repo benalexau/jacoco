@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  <link rel="stylesheet" href=".resources/doc.css" charset="ISO-8859-1" type="text/css" />
+  <link rel="stylesheet" href="../coverage/.resources/prettify.css" charset="ISO-8859-1" type="text/css" />
+  <link rel="shortcut icon" href=".resources/report.gif" type="image/gif" />
+  <script type="text/javascript" src="../coverage/.resources/prettify.js"></script>
+  <title>JaCoCo - Maven Plug-in</title>
+</head>
+<body onload="prettyPrint()">
+
+<div class="breadcrumb">
+  <a href="../index.html" class="el_report">JaCoCo</a> &gt;
+  <a href="index.html" class="el_group">Documentation</a> &gt;
+  <span class="el_source">Maven Plug-in</span>
+</div>
+<div id="content"> 
+
+<h1>Maven Plug-in</h1>
+
+<p>
+  The JaCoCo <a href="http://maven.apache.org/">Maven</a> plug-in provides the
+  JaCoCo runtime agent to your tests and allows basic report creation.
+</p>
+
+<p class="hint">
+  If you want to have line number information included in the coverage reports
+  or you want source code highlighting the class files of the test target must
+  be compiled with debug information.
+</p>
+
+
+<h2>Prerequisites</h2>
+
+<p>
+  The JaCoCo Maven plug-in require
+</p>
+
+<ul>
+  <li>Maven 2.1.0 or higher and</li>
+  <li>Java 1.5 or higher (for both, the Maven runtime and the test executor).</li>
+</ul>
+
+
+<h2>Usage</h2>
+
+<p>
+  The Maven plug-in can be included in your build with the following declaration:
+</p>
+
+<pre class="source lang-xml linenums">
+&lt;plugin&gt;
+  &lt;groupId&gt;org.jacoco&lt;/groupId&gt;
+  &lt;artifactId&gt;jacoco-maven-plugin&lt;/artifactId&gt;
+  &lt;version&gt;@project.version@&lt;/version&gt;
+&lt;/plugin&gt;
+</pre>
+
+<p>
+  To receive a full list of goals and available parameters you can use maven-help-plugin:
+</p>
+<pre>
+mvn help:describe -Dplugin=org.jacoco:jacoco-maven-plugin -Ddetail
+</pre>
+
+</div>
+<div class="footer">
+  <span class="right"><a href="@jacoco.home.url@">JaCoCo</a> @qualified.bundle.version@</span>
+  <a href="license.html">Copyright</a> &copy; @copyright.years@ Mountainminds GmbH &amp; Co. KG and Contributors
+</div>
+
+</body>
+</html>
